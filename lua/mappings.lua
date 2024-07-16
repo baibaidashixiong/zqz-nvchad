@@ -27,6 +27,5 @@ map("n", "<leader>tr", ":NvimTreeToggle<CR>")
 map("n", "<A-l>", ":bnext<CR>", opt)
 map("n", "<A-h>", ":bprevious<CR>", opt)
   -- close buffer
-map("n", "<C-w>", ":bd<CR>", opt)
 map("n", "H", "<C-W>>", opt)
 map("n", "L", "<C-W><", opt)
