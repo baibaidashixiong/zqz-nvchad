@@ -29,3 +29,4 @@ map("n", "<A-h>", ":bprevious<CR>", opt)
   -- close buffer
 map("n", "H", "<C-W>>", opt)
 map("n", "L", "<C-W><", opt)
+map("v", "<C-c>", "y", opt)
