@@ -3,13 +3,7 @@ local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
-local lspconfig = require("nvchad.configs.lspconfig")
-local servers = { "html", "cssls", "rust_analyzer" }
-
-lspconfig.servers = {
-  "lua_ls",
-  "rust_analyzer",
-}
+local servers = { "html", "cssls" }
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
@@ -41,11 +35,21 @@ vim.lsp.config("clangd", { -- nvim 0.11
 vim.lsp.config("rust_analyzer", {
   settings = {
     ["rust-analyzer"] = {
+      cachePriming = {
+        enable = false,
+      },
       cargo = {
-        allFeatures = true,
+        allTargets = false,
+        features = {},
+        targetDir = true,
+        buildScripts = {
+          rebuildOnSave = false,
+        },
       },
       check = {
-        command = "clippy",
+        command = "check",
+        allTargets = false,
+        workspace = false,
       },
     },
   },
