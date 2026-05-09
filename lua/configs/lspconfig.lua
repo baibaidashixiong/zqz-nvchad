@@ -4,11 +4,10 @@ local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 local lspconfig = require("nvchad.configs.lspconfig")
-local servers = { "html", "cssls", "clangd", "rust_analyzer" }
+local servers = { "html", "cssls", "rust_analyzer" }
 
 lspconfig.servers = {
   "lua_ls",
-  "clangd",
   "rust_analyzer",
 }
 
@@ -22,6 +21,14 @@ for _, lsp in ipairs(servers) do
 end
 
 vim.lsp.config("clangd", { -- nvim 0.11
+    cmd = {
+        'clangd',
+        '--clang-tidy',
+        '--background-index',
+        '--offset-encoding=utf-8',
+    },
+    root_markers = { '.clangd', 'compile_commands.json' },
+    filetypes = { 'c', 'cpp' },
     on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
@@ -92,14 +99,4 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
-
-vim.lsp.config.clangd = {
-  cmd = {
-    'clangd',
-    '--clang-tidy',
-    '--background-index',
-    '--offset-encoding=utf-8',
-  },
-  root_markers = { '.clangd', 'compile_commands.json' },
-  filetypes = { 'c', 'cpp' },}
 vim.lsp.enable('clangd')
