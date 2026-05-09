@@ -4,11 +4,12 @@ local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 local lspconfig = require("nvchad.configs.lspconfig")
-local servers = { "html", "cssls", "clangd" }
+local servers = { "html", "cssls", "clangd", "rust_analyzer" }
 
 lspconfig.servers = {
   "lua_ls",
   "clangd",
+  "rust_analyzer",
 }
 
 -- lsps with default config
@@ -29,6 +30,23 @@ vim.lsp.config("clangd", { -- nvim 0.11
     on_init = on_init,
     capabilities = capabilities,
 })
+
+vim.lsp.config("rust_analyzer", {
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+      },
+      check = {
+        command = "clippy",
+      },
+    },
+  },
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+})
+vim.lsp.enable('rust_analyzer')
 
 require('render-markdown').setup({
     completions = { lsp = { enabled = true } },
